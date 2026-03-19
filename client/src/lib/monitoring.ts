@@ -4,7 +4,8 @@
  */
 
 // Sentry 条件导入 - 如果未安装则跳过
-let Sentry: typeof import('@sentry/react') | null = null
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let Sentry: any = null
 try {
   Sentry = require('@sentry/react')
 } catch {

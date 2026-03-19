@@ -4,7 +4,7 @@ import { Project, Task, Risk, Milestone, Invitation, ProjectMember, User } from 
 interface AppState {
   // 当前用户
   currentUser: User | null
-  setCurrentUser: (user: User | null) => void
+  setCurrentUser: (user: Partial<User> | null) => void
 
   // 当前项目
   currentProject: Project | null

@@ -24,11 +24,11 @@ export function exportAllData(): BackupData {
     version: '1.0.0',
     timestamp: new Date().toISOString(),
     data: {
-      users: userDb.findAll(),
-      projects: projectDb.findAll(),
-      tasks: taskDb.findAll(),
-      risks: riskDb.findAll(),
-      milestones: milestoneDb.findAll(),
+      users: userDb.getAll(),
+      projects: projectDb.getAll(),
+      tasks: taskDb.getAll(),
+      risks: riskDb.getAll(),
+      milestones: milestoneDb.getAll(),
     },
   }
 }
@@ -72,7 +72,7 @@ export async function importBackup(file: File): Promise<{ success: boolean; mess
 
     if (data.data.projects) {
       data.data.projects.forEach((project: any) => {
-        const existing = projectDb.get(project.id)
+        const existing = projectDb.getById(project.id)
         if (existing) {
           projectDb.update(project.id, project)
         } else {
@@ -83,7 +83,7 @@ export async function importBackup(file: File): Promise<{ success: boolean; mess
 
     if (data.data.tasks) {
       data.data.tasks.forEach((task: any) => {
-        const existing = taskDb.get(task.id)
+        const existing = taskDb.getById(task.id)
         if (existing) {
           taskDb.update(task.id, task)
         } else {
@@ -94,7 +94,7 @@ export async function importBackup(file: File): Promise<{ success: boolean; mess
 
     if (data.data.risks) {
       data.data.risks.forEach((risk: any) => {
-        const existing = riskDb.get(risk.id)
+        const existing = riskDb.getById(risk.id)
         if (existing) {
           riskDb.update(risk.id, risk)
         } else {
@@ -105,7 +105,7 @@ export async function importBackup(file: File): Promise<{ success: boolean; mess
 
     if (data.data.milestones) {
       data.data.milestones.forEach((milestone: any) => {
-        const existing = milestoneDb.get(milestone.id)
+        const existing = milestoneDb.getById(milestone.id)
         if (existing) {
           milestoneDb.update(milestone.id, milestone)
         } else {

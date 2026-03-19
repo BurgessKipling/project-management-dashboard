@@ -30,8 +30,8 @@ export interface RiskAlert {
   description: string
   relatedTaskId?: string
   relatedTaskName?: string
- 建议?: string
-  createdAt: Date
+  建议?: string
+  createdAt?: Date
 }
 
 // 风险预警配置

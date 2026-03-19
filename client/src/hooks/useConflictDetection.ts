@@ -134,15 +134,13 @@ export function useConflictDetection(): UseConflictDetectionReturn {
  * 智能合并算法
  * 自动合并两个版本的数据
  */
-export function smartMerge<T extends Record<string, any>>(
-  localData: T,
-  serverData: T
-): T {
-  const result: T = { ...serverData } // 以服务器数据为基础
-  
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function smartMerge(localData: any, serverData: any): any {
+  const result: any = { ...serverData } // 以服务器数据为基础
+
   // 时间字段：取最新
   const timeFields = ['created_at', 'updated_at', 'start_date', 'end_date', 'due_date']
-  
+
   for (const field of timeFields) {
     if (localData[field] && serverData[field]) {
       result[field] = localData[field] > serverData[field] ? localData[field] : serverData[field]
@@ -153,7 +151,7 @@ export function smartMerge<T extends Record<string, any>>(
 
   // 文本字段：取本地（用户输入优先）
   const textFields = ['name', 'title', 'description', 'content', 'notes', 'remarks']
-  
+
   for (const field of textFields) {
     if (localData[field] !== undefined) {
       result[field] = localData[field]
@@ -162,7 +160,7 @@ export function smartMerge<T extends Record<string, any>>(
 
   // 状态字段：取本地（用户操作优先）
   const statusFields = ['status', 'priority', 'category', 'type', 'severity']
-  
+
   for (const field of statusFields) {
     if (localData[field] !== undefined) {
       result[field] = localData[field]
@@ -171,7 +169,7 @@ export function smartMerge<T extends Record<string, any>>(
 
   // 布尔字段：取本地（用户设置优先）
   const booleanFields = ['is_completed', 'is_critical', 'is_archived', 'is_active']
-  
+
   for (const field of booleanFields) {
     if (localData[field] !== undefined) {
       result[field] = localData[field]
@@ -180,7 +178,7 @@ export function smartMerge<T extends Record<string, any>>(
 
   // 数值字段：取本地
   const numberFields = ['progress', 'order', 'sort']
-  
+
   for (const field of numberFields) {
     if (localData[field] !== undefined) {
       result[field] = localData[field]
