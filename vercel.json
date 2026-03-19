@@ -55,9 +55,5 @@
         }
       ]
     }
-  ],
-  "performance": {
-    "max_memory": 3000,
-    "max_response_time": 30000
-  }
+  ]
 }
