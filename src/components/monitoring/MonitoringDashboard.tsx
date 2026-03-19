@@ -1,11 +1,11 @@
 /**
- * 监控仪表盘页面
- * 集成 API 监控、性能指标、错误追踪
+ * Monitoring Dashboard Page
+ * Integrated API monitoring, performance metrics, and error tracking
  */
 
 import { useState } from 'react'
 import { Activity, Clock, AlertTriangle, Bug, BarChart3, Zap } from 'lucide-react'
-import ApiMonitorBoard from './ApiMonitorBoard'
+// import ApiMonitorBoard from './ApiMonitorBoard'
 import { localMonitor } from '@/lib/monitoring'
 
 export default function MonitoringDashboard() {
@@ -13,52 +13,52 @@ export default function MonitoringDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* 页面头部 */}
+      {/* Page Header */}
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
           <Activity className="h-6 w-6" />
-          系统监控
+          System Monitoring
         </h1>
         <p className="text-muted-foreground mt-1">
-          实时监控系统性能和服务状态
+          Real-time system performance and service status
         </p>
       </div>
 
-      {/* 快速统计 */}
+      {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard
           icon={<BarChart3 className="h-5 w-5" />}
-          label="API 请求"
+          label="API Requests"
           value={localMonitor.getApiMetrics().length}
           color="blue"
         />
         <StatCard
           icon={<Clock className="h-5 w-5" />}
-          label="平均响应"
+          label="Avg Response"
           value={`${localMonitor.getAverageResponseTime().toFixed(0)}ms`}
           color="green"
         />
         <StatCard
           icon={<AlertTriangle className="h-5 w-5" />}
-          label="错误率"
+          label="Error Rate"
           value={`${(localMonitor.getErrorRate() * 100).toFixed(1)}%`}
           color={localMonitor.getErrorRate() > 0.1 ? 'red' : 'green'}
         />
         <StatCard
           icon={<Zap className="h-5 w-5" />}
-          label="慢请求"
+          label="Slow Requests"
           value={localMonitor.getSlowRequests(3000).length}
           color={localMonitor.getSlowRequests(3000).length > 0 ? 'red' : 'green'}
         />
       </div>
 
-      {/* Tab 切换 */}
+      {/* Tab Navigation */}
       <div className="border-b">
         <nav className="flex gap-4">
           {[
-            { id: 'api', label: 'API 监控', icon: BarChart3 },
-            { id: 'performance', label: '性能指标', icon: Zap },
-            { id: 'errors', label: '错误追踪', icon: Bug },
+            { id: 'api', label: 'API Monitor', icon: BarChart3 },
+            { id: 'performance', label: 'Performance', icon: Zap },
+            { id: 'errors', label: 'Error Tracker', icon: Bug },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -76,10 +76,11 @@ export default function MonitoringDashboard() {
         </nav>
       </div>
 
-      {/* Tab 内容 */}
+      {/* Tab Content */}
       <div className="mt-6">
         {activeTab === 'api' && (
-          <ApiMonitorBoard />
+          // <ApiMonitorBoard />
+          <div className="p-8 text-center text-muted-foreground">API Monitoring temporarily disabled</div>
         )}
         
         {activeTab === 'performance' && (
@@ -94,7 +95,7 @@ export default function MonitoringDashboard() {
   )
 }
 
-// 统计卡片组件
+// Stat Card Component
 function StatCard({ 
   icon, 
   label, 
@@ -124,7 +125,7 @@ function StatCard({
   )
 }
 
-// 性能指标组件
+// Performance Metrics Component
 function PerformanceMetrics() {
   const metrics = localMonitor.getPerformanceMetrics()
   
@@ -132,8 +133,8 @@ function PerformanceMetrics() {
     return (
       <div className="text-center py-12 text-muted-foreground">
         <Zap className="h-12 w-12 mx-auto mb-4 opacity-50" />
-        <p>暂无性能数据</p>
-        <p className="text-sm mt-1">性能指标将在您使用系统时自动收集</p>
+        <p>No performance data yet</p>
+        <p className="text-sm mt-1">Metrics will be collected automatically as you use the system</p>
       </div>
     )
   }
@@ -142,7 +143,7 @@ function PerformanceMetrics() {
     <div className="space-y-4">
       <div className="bg-card border rounded-lg overflow-hidden">
         <div className="bg-muted px-4 py-2 border-b">
-          <span className="font-medium text-sm">性能追踪记录</span>
+          <span className="font-medium text-sm">Performance Records</span>
         </div>
         <div className="divide-y">
           {metrics.slice(-20).map((m, i) => (
@@ -166,7 +167,7 @@ function PerformanceMetrics() {
   )
 }
 
-// 错误追踪组件
+// Error Tracker Component
 function ErrorTracker() {
   const errorMetrics = localMonitor.getApiMetrics().filter(m => m.error || m.statusCode >= 400)
   
@@ -174,8 +175,8 @@ function ErrorTracker() {
     return (
       <div className="text-center py-12 text-muted-foreground">
         <Bug className="h-12 w-12 mx-auto mb-4 opacity-50" />
-        <p>暂无错误记录</p>
-        <p className="text-sm mt-1">错误信息将在出现问题时自动显示</p>
+        <p>No error records yet</p>
+        <p className="text-sm mt-1">Errors will appear automatically when issues occur</p>
       </div>
     )
   }
@@ -184,8 +185,8 @@ function ErrorTracker() {
     <div className="space-y-4">
       <div className="bg-card border rounded-lg overflow-hidden">
         <div className="bg-muted px-4 py-2 border-b flex items-center justify-between">
-          <span className="font-medium text-sm">错误记录</span>
-          <span className="text-sm text-red-500">{errorMetrics.length} 个错误</span>
+          <span className="font-medium text-sm">Error Records</span>
+          <span className="text-sm text-red-500">{errorMetrics.length} errors</span>
         </div>
         <div className="divide-y">
           {errorMetrics.slice(-20).map((m, i) => (
@@ -199,7 +200,7 @@ function ErrorTracker() {
                 </span>
               </div>
               <div className="text-sm text-muted-foreground mt-1">
-                状态码: {m.statusCode || 'N/A'} • 耗时: {m.duration.toFixed(0)}ms
+                Status: {m.statusCode || 'N/A'} • Duration: {m.duration.toFixed(0)}ms
               </div>
               {m.error && (
                 <div className="text-sm text-red-500 mt-1 font-mono">
