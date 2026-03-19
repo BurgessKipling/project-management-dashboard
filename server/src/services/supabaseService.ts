@@ -16,11 +16,11 @@ export class SupabaseService {
   }
 
   constructor() {
-    const url = process.env.SUPABASE_URL || ''
-    const key = process.env.SUPABASE_ANON_KEY || ''
+    const url = process.env.SUPABASE_URL
+    const key = process.env.SUPABASE_ANON_KEY
     
     if (!url || !key) {
-      throw new Error('Supabase configuration missing')
+      throw new Error('Supabase configuration missing. Please ensure SUPABASE_URL and SUPABASE_ANON_KEY are set in your .env file.')
     }
     
     this.client = createClient(url, key)
